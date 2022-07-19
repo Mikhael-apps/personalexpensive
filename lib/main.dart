@@ -33,25 +33,27 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter app'),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: const Card(
-                  color: Colors.blueAccent,
-                  elevation: 5,
-                  child: Text('Chart')
-                  ),
-            ),
-            // Card(
-            //   child: Text('${transactions.map((data) {
-            //     data.amount;
-            //   }).toList()}'),
-            // ),
-         const UserTransactionsWidget(),
-          ],
+        body:  SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: double.infinity,
+                  child: const Card(
+                      color: Colors.blueAccent,
+                      elevation: 5,
+                      child: Text('Chart')
+                      ),
+                ),
+                // Card(
+                //   child: Text('${transactions.map((data) {
+                //     data.amount;
+                //   }).toList()}'),
+                // ),
+             const UserTransactionsWidget(),
+              ],
+          ),
         ));
   }
 }
