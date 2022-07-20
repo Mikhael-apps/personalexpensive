@@ -23,7 +23,7 @@ class TransactionListWidget extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
@@ -32,7 +32,8 @@ class TransactionListWidget extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Colors.purple),
+                      color: Theme.of(context).primaryColor,
+                      ),
                 ),
               ),
               Column(
