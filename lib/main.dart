@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personalexpensive/widgets/chart.dart';
 import 'package:personalexpensive/widgets/new_transaction.dart';
 import 'package:personalexpensive/widgets/transaction_list.dart';
 import 'models/transaction.dart';
@@ -60,6 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tx) {
+    return  tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
+
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(context: ctx, builder: (_) {
       return GestureDetector(
@@ -67,7 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
           print('hello');
         },
         behavior: HitTestBehavior.opaque,
-        child: NewTransactionWidget(_addNewTransaction));
+        child: NewTransactionWidget(_addNewTransaction),
+        );
         
     });
   }
@@ -100,20 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: double.infinity,
-                  child: const Card(
-                      color: Colors.blueAccent,
-                      elevation: 5,
-                      child: Text('Chart')
-                      ),
-                ),
+                ChartWidget(_recentTransactions),
                 // Card(
                 //   child: Text('${transactions.map((data) {
                 //     data.amount;
                 //   }).toList()}'),
                 // ),
-              TransactionListWidget(_transactions,)
+              TransactionListWidget(_transactions,),
               ],
           ),
         ),
