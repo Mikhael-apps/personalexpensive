@@ -16,7 +16,7 @@ class NewTransactionWidget extends StatefulWidget {
 class _NewTransactionWidgetState extends State<NewTransactionWidget> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-   late DateTime _selectedDate;
+    DateTime? _selectedDate;
   @override
   Widget build(BuildContext context) {
 //  late String titleInput;
@@ -25,7 +25,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
     void _submitedData() {
       final enteredTitle = _titleController.text;
       final enteredAmount = double.parse(_amountController.text);
-      if (enteredTitle.isEmpty || enteredAmount < 0 || enteredAmount == null) {
+      if (enteredTitle.isEmpty || enteredAmount < 0 || _selectedDate == null) {
+        print('object');
         return;
       }
       widget._addNewTransaction(enteredTitle, enteredAmount);
@@ -82,8 +83,9 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
               onSubmitted: (_) => _submitedData,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                 Text(_selectedDate == null ? 'No data chosen!' : DateFormat.yMMMd().format(_selectedDate)),
+                 Text(_selectedDate == null ? 'No data chosen!' : 'icked dated: ${DateFormat.yMMMd().format(_selectedDate as DateTime)}'),
                 FlatButton(
                     child: Text('Choose date'), 
                     onPressed: _showDatePicker

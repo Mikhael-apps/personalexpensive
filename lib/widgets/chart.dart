@@ -12,7 +12,7 @@ class ChartWidget extends StatelessWidget {
     return List.generate(7, (index) {
       
       final weekDays = DateTime.now().subtract(Duration(days: index));
-     late double totalSum;
+       dynamic totalSum;
       for(var i=0; i<recentTransactions.length; i++){
         if(recentTransactions[i].date.day == weekDays.day &&
             recentTransactions[i].date.month == weekDays.month &&
@@ -23,7 +23,7 @@ class ChartWidget extends StatelessWidget {
       print(DateFormat.E().format(weekDays));
       print(totalSum);
 
-      return {'Day': DateFormat.E().format(weekDays), 'Amount': totalSum};
+      return {'Day': DateFormat.E().format(weekDays), 'Amount': totalSum as double};
     });
   }
 
@@ -38,9 +38,9 @@ class ChartWidget extends StatelessWidget {
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: <Widget>[
-
-        ],
+        children: groupedTransactionValues.map((data) {
+          return Text('${data['Day]}');
+        }).toList(),
       ),
     );
   }
