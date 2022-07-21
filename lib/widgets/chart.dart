@@ -38,9 +38,9 @@ class ChartWidget extends StatelessWidget {
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: groupedTransactionValues.map((data) {
-          return Text('${data['Day]}');
-        }).toList(),
+        children: <Widget>[
+
+        ],
       ),
     );
   }
