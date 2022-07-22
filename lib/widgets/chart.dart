@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalexpensive/models/transaction.dart';
+import 'package:personalexpensive/widgets/chart_bar.dart';
 
 class ChartWidget extends StatelessWidget {
 
@@ -8,11 +9,11 @@ class ChartWidget extends StatelessWidget {
 
   ChartWidget(this.recentTransactions);
 
-  List<Map<String, Object>> get groupedTransactionValues {
+  List<Map<String, dynamic>> get groupedTransactionValues {
     return List.generate(7, (index) {
       
       final weekDays = DateTime.now().subtract(Duration(days: index));
-       dynamic totalSum;
+       var totalSum = 0.0;
       for(var i=0; i<recentTransactions.length; i++){
         if(recentTransactions[i].date.day == weekDays.day &&
             recentTransactions[i].date.month == weekDays.month &&
@@ -23,7 +24,13 @@ class ChartWidget extends StatelessWidget {
       print(DateFormat.E().format(weekDays));
       print(totalSum);
 
-      return {'Day': DateFormat.E().format(weekDays), 'Amount': totalSum as double};
+      return {'Day': DateFormat.E().format(weekDays).substring(0,1), 'Amount': totalSum as double};
+    }).reversed.toList(); 
+  }
+
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['Amount'];
     });
   }
 
@@ -37,10 +44,23 @@ class ChartWidget extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: <Widget>[
-
-        ],
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((data) {
+            return Flexible(
+              flex: 2,
+              fit: FlexFit.loose,
+              child: ChartBarWidget(     
+              label: data['Day'],
+              spendingAmount: data['Amount'],
+               spendingPctOfTotal: totalSpending == 0.0 ? 0.0 : (data['Amount'] as double) / totalSpending,
+            
+                ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

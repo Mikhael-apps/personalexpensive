@@ -23,13 +23,16 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
     // late String amountInput;
 
     void _submitedData() {
+      if(_amountController.text.isEmpty) {
+        return;
+      }
       final enteredTitle = _titleController.text;
       final enteredAmount = double.parse(_amountController.text);
       if (enteredTitle.isEmpty || enteredAmount < 0 || _selectedDate == null) {
         print('object');
         return;
       }
-      widget._addNewTransaction(enteredTitle, enteredAmount);
+      widget._addNewTransaction(enteredTitle, enteredAmount, _selectedDate);
 
       Navigator.pop(context);
     }
