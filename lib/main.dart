@@ -61,6 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+       _transactions.removeWhere((data) => data.id == id);
+    });
+  }
+
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
     return  tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
@@ -114,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //     data.amount;
                 //   }).toList()}'),
                 // ),
-              TransactionListWidget(_transactions,),
+              TransactionListWidget(_transactions, _deleteTransaction),
               ],
           ),
         ),

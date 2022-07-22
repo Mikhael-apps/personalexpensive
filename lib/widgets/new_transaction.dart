@@ -37,6 +37,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
       Navigator.pop(context);
     }
 
+    
+
     void _showDatePicker() {
       showDatePicker(
           context: context,
