@@ -67,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
     return  tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
@@ -101,6 +103,19 @@ class _MyHomePageState extends State<MyHomePage> {
           child: _transactions.isEmpty ? 
             Column(
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Show the chart'),
+                    Switch(value: _showChart, onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                      
+                    }),
+                  ],
+                ),
+                _showChart == true ? Text('just') : ChartWidget(_recentTransactions),
                 Text('No transactions yet!', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                 SizedBox(height: 20,),
                 Container(
